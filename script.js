@@ -10,7 +10,7 @@ const Gameboard = (() => {
 })();
 
 const Game = (() => {
-	const initiate = (playerA, playerB) => {
+	const start = (playerA, playerB) => {
 		Gameboard.board = [];
 	};
 	return { initiate };
