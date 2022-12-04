@@ -5,9 +5,8 @@ const Player = (sign, name) => {
 };
 
 const Game = (() => {
-	let board = [];
-	const checkForEnd = () => {
-		console.log("I'm not implemented... yet");
+	const initiate = (playerA, playerB) => {
+		Gameboard.board = [];
 	};
-	return { board, checkForEnd };
+	return { initiate };
 })();
