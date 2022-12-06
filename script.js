@@ -15,6 +15,7 @@ const Game = (() => {
 	};
 	const display = () => {
 		const boardContainer = document.createElement("div");
+		boardContainer.classList.add("boardContainer");
 		for (let i = 0; i < 9; i++) {
 			const cell = document.createElement("div");
 			cell.textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
