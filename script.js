@@ -10,6 +10,7 @@ const Gameboard = (() => {
 })();
 
 const Game = (() => {
+	const players = [];
 	const start = (playerX, playerO) => {
 		Gameboard.board = [];
 	};
@@ -24,5 +25,5 @@ const Game = (() => {
 		const body = document.querySelector("body");
 		body.appendChild(boardContainer);
 	};
-	return { start, display };
+	return { start, display, players };
 })();
