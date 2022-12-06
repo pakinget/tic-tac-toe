@@ -6,13 +6,18 @@ const Player = (sign, name, wins = 0) => {
 
 const Gameboard = (() => {
 	let board = [["x", "o", "x"], ["x", "o", "x"], ["o", "x", "o"]];
-	return { board };
+	let node;
+	const reset = () => {
+		Gameboard.board = [];
+		Gameboard.node = undefined;
+	};
+	return { board, node, reset };
 })();
 
 const Game = (() => {
 	const players = [];
 	const start = (playerX, playerO) => {
-		Gameboard.board = [];
+		Gameboard.reset();
 	};
 	const display = () => {
 		const boardContainer = document.createElement("div");
@@ -25,5 +30,5 @@ const Game = (() => {
 		const body = document.querySelector("body");
 		body.appendChild(boardContainer);
 	};
-	return { start, display, players };
+	return { players, start, display };
 })();
