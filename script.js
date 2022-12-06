@@ -1,7 +1,7 @@
 "use strict";
 
-const Player = (sign, name) => {
-	return { sign, name };
+const Player = (sign, name, wins = 0) => {
+	return { sign, name, wins };
 };
 
 const Gameboard = (() => {
@@ -10,7 +10,7 @@ const Gameboard = (() => {
 })();
 
 const Game = (() => {
-	const start = (playerA, playerB) => {
+	const start = (playerX, playerO) => {
 		Gameboard.board = [];
 	};
 	const display = () => {
@@ -19,7 +19,6 @@ const Game = (() => {
 			const cell = document.createElement("div");
 			cell.textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
 			boardContainer.appendChild(cell);
-			console.log(cell);
 		}
 		const body = document.querySelector("body");
 		body.appendChild(boardContainer);
