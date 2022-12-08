@@ -26,11 +26,16 @@ const Gameboard = (() => {
 		Gameboard.board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
 		Gameboard.node = undefined;
 	};
-	return { board, node, rese, create };
+	return { board, node, reset, create };
 })();
 
 const Game = (() => {
 	const players = [];
+	let turns = 0;
+	const turnSign = (playerX, playerO) => {
+		if (turns % 2 === 0) return playerO.sign;
+		else return playerX.sign;
+	};
 	const start = (playerX, playerO) => {
 		// Swapping the players is playerX's sign isn't actually X
 		if (playerX.sign !== "x") {
@@ -38,10 +43,11 @@ const Game = (() => {
 			playerO = playerX;
 			playerX = temp;
 		}
+		turns = 1;
 		Gameboard.reset();
-		Game.display();
+		Gameboard.create();
 	};
-	return { players, start };
+	return { players, turns, start, turnSign };
 })();
 
 let a = Player("a", "x", 0);
