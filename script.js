@@ -30,11 +30,13 @@ const Gameboard = (() => {
 })();
 
 const Game = (() => {
-	const players = [];
+	let players = [];
+	let playerX;
+	let playerO;
 	let turns = 0;
-	const turnSign = (playerX, playerO) => {
-		if (turns % 2 === 0) return playerO.sign;
-		else return playerX.sign;
+	const turnSign = () => {
+		if (turns % 2 === 0) return Game.playerO.sign;
+		else return Game.playerX.sign;
 	};
 	const start = (playerX, playerO) => {
 		// Swapping the players is playerX's sign isn't actually X
@@ -47,7 +49,7 @@ const Game = (() => {
 		Gameboard.reset();
 		Gameboard.create();
 	};
-	return { players, turns, start, turnSign };
+	return { players, playerX, playerO, turns, start, turnSign };
 })();
 
 let a = Player("a", "x", 0);
