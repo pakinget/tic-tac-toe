@@ -34,7 +34,7 @@ const Game = (() => {
 	let playerX;
 	let playerO;
 	let turns = 0;
-	const turnSign = () => {
+	const getTurnSign = () => {
 		if (turns % 2 === 0) return Game.playerO.sign;
 		else return Game.playerX.sign;
 	};
@@ -49,7 +49,7 @@ const Game = (() => {
 		Gameboard.reset();
 		Gameboard.create();
 	};
-	return { players, playerX, playerO, turns, start, turnSign };
+	return { players, playerX, playerO, turns, start, getTurnSign };
 })();
 
 let a = Player("a", "x", 0);
