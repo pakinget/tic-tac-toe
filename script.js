@@ -13,9 +13,10 @@ const Gameboard = (() => {
 		Gameboard.node = boardContainer;
 		for (let i = 0; i < 9; i++) {
 			const cell = document.createElement("div");
-			cell.textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
 			cell.addEventListener("click", (event) => {
-				event.target.textContent = `${Game.getTurnPlayer().sign}`;
+				const cells = Array.from(event.target.parentElement.children);
+				const index = cells.indexOf(event.target);
+				Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
 				Game.turns++;
 			});
 			boardContainer.appendChild(cell);
