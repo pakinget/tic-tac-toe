@@ -45,6 +45,8 @@ const Game = (() => {
 			playerO = playerX;
 			playerX = temp;
 		}
+		Game.playerX = playerX;
+		Game.playerO = playerO;
 		turns = 1;
 		Gameboard.reset();
 		Gameboard.create();
