@@ -18,6 +18,7 @@ const Gameboard = (() => {
 				const index = cells.indexOf(event.target);
 				Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
 				Game.turns++;
+				Gameboard.update();
 			});
 			boardContainer.appendChild(cell);
 		}
@@ -28,7 +29,13 @@ const Gameboard = (() => {
 		Gameboard.board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
 		Gameboard.node = undefined;
 	};
-	return { board, node, reset, create };
+	const update = () => {
+		const cells = Array.from(Gameboard.node.children);
+		for (let i = 0; i < 9; i++) {
+			cells[i].textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
+		}
+	};
+	return { board, node, reset, create, update };
 })();
 
 const Game = (() => {
@@ -52,6 +59,7 @@ const Game = (() => {
 		Game.turns = 1;
 		Gameboard.reset();
 		Gameboard.create();
+		Gameboard.update();
 	};
 	return { players, playerX, playerO, turns, start, getTurnPlayer };
 })();
