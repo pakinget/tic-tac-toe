@@ -14,9 +14,10 @@ const Gameboard = (() => {
 		for (let i = 0; i < 9; i++) {
 			const cell = document.createElement("div");
 			cell.textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
-			/* cell.addEventListener("click", () => {
-
-			}); */
+			cell.addEventListener("click", (event) => {
+				event.target.textContent = `${Game.getTurnSign()}`;
+				Game.turns++;
+			});
 			boardContainer.appendChild(cell);
 		}
 		const body = document.querySelector("body");
@@ -35,7 +36,7 @@ const Game = (() => {
 	let playerO;
 	let turns = 0;
 	const getTurnSign = () => {
-		if (turns % 2 === 0) return Game.playerO.sign;
+		if (Game.turns % 2 === 0) return Game.playerO.sign;
 		else return Game.playerX.sign;
 	};
 	const start = (playerX, playerO) => {
@@ -47,13 +48,13 @@ const Game = (() => {
 		}
 		Game.playerX = playerX;
 		Game.playerO = playerO;
-		turns = 1;
+		Game.turns = 1;
 		Gameboard.reset();
 		Gameboard.create();
 	};
 	return { players, playerX, playerO, turns, start, getTurnSign };
 })();
 
-let a = Player("a", "x", 0);
-let b = Player("b", "x", 0);
+let a = Player("x", "a", 0);
+let b = Player("o", "b", 0);
 Game.start(a, b);
