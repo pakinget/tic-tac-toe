@@ -43,10 +43,12 @@ const Game = (() => {
 	let playerX;
 	let playerO;
 	let turns = 0;
+
 	const getTurnPlayer = () => {
 		if (Game.turns % 2 === 0) return Game.playerO;
 		else return Game.playerX;
 	};
+
 	const start = (playerX, playerO) => {
 		// Swapping the players is playerX's sign isn't actually X
 		if (playerX.sign !== "x") {
@@ -61,7 +63,34 @@ const Game = (() => {
 		Gameboard.create();
 		Gameboard.update();
 	};
-	return { players, playerX, playerO, turns, start, getTurnPlayer };
+
+	const checkForEnd = () => {
+		// Check rows
+		let same = true;
+		for (let i = 0; i < 3 && same === true; i++) {
+			for (let j = 0; j < 2; j++) {
+				if (Gameboard.board[i][j] !== Gameboard.board[i][j + 1]) same = false;
+			}
+		}
+		// Check columns
+		for (let i = 0; i < 3 && same === true; i++) {
+			for (let j = 0; j < 2; j++) {
+				if (Gameboard.board[j][i] !== Gameboard.board[j + 1][i]) same = false;
+			}
+		}
+		// Check the main diagonal
+		for (let j = 0; j < 2 && same === true; j++) {
+			if (Gameboard.board[j][j] !== Gameboard.board[j + 1][j + 1]) same = false;
+		}
+		// Check the anti-diagonal
+		for (let j = 0; j < 2 && same === true; j++) {
+			if (Gameboard.board[j][2 - j] !== Gameboard.board[j + 1][1 - j]) same = false;
+		}
+		if (same === true && Game.turns === 9) return "tie";
+		else if (same === false) return "win";
+		else return false;
+	};
+	return { players, playerX, playerO, turns, start, getTurnPlayer, checkForEnd };
 })();
 
 let a = Player("x", "a", 0);
