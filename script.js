@@ -14,11 +14,15 @@ const Gameboard = (() => {
 		for (let i = 0; i < 9; i++) {
 			const cell = document.createElement("div");
 			cell.addEventListener("click", (event) => {
+				Game.turns++;
 				const cells = Array.from(event.target.parentElement.children);
 				const index = cells.indexOf(event.target);
 				Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
-				Game.turns++;
 				Gameboard.update();
+				if (Game.checkForEnd() === true) {
+					console.log(`The end. ${Game.getTurnPlayer().name} won!`);
+				}
+				else if (Game.turns === 9) console.log("The end. It's a tie!");
 			});
 			boardContainer.appendChild(cell);
 		}
@@ -58,37 +62,21 @@ const Game = (() => {
 		}
 		Game.playerX = playerX;
 		Game.playerO = playerO;
-		Game.turns = 1;
+		Game.turns = 0;
 		Gameboard.reset();
 		Gameboard.create();
 		Gameboard.update();
 	};
 
 	const checkForEnd = () => {
-		// Check rows
-		let same = true;
-		for (let i = 0; i < 3 && same === true; i++) {
-			for (let j = 0; j < 2; j++) {
-				if (Gameboard.board[i][j] !== Gameboard.board[i][j + 1]) same = false;
-			}
+		let end = false;
+		if (Gameboard.board[0][0] !== " " && Gameboard.board[0][0] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][2]) end = true;
+		else if (Gameboard.board[0][2] !== " " && Gameboard.board[0][2] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][0]) end = true;
+		for (let i = 0; i < 3 && end !== true; i++) {
+			if (Gameboard.board[i][0] !== " " && Gameboard.board[i][0] === Gameboard.board[i][1] && Gameboard.board[i][1] === Gameboard.board[i][2]) end = true;
+			else if (Gameboard.board[0][i] !== " " && Gameboard.board[0][i] === Gameboard.board[1][i] && Gameboard.board[1][i] === Gameboard.board[2][i]) end = true;
 		}
-		// Check columns
-		for (let i = 0; i < 3 && same === true; i++) {
-			for (let j = 0; j < 2; j++) {
-				if (Gameboard.board[j][i] !== Gameboard.board[j + 1][i]) same = false;
-			}
-		}
-		// Check the main diagonal
-		for (let j = 0; j < 2 && same === true; j++) {
-			if (Gameboard.board[j][j] !== Gameboard.board[j + 1][j + 1]) same = false;
-		}
-		// Check the anti-diagonal
-		for (let j = 0; j < 2 && same === true; j++) {
-			if (Gameboard.board[j][2 - j] !== Gameboard.board[j + 1][1 - j]) same = false;
-		}
-		if (same === true && Game.turns === 9) return "tie";
-		else if (same === false) return "win";
-		else return false;
+		return end;
 	};
 	return { players, playerX, playerO, turns, start, getTurnPlayer, checkForEnd };
 })();
