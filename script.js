@@ -14,15 +14,21 @@ const Gameboard = (() => {
 		for (let i = 0; i < 9; i++) {
 			const cell = document.createElement("div");
 			cell.addEventListener("click", (event) => {
-				Game.turns++;
 				const cells = Array.from(event.target.parentElement.children);
 				const index = cells.indexOf(event.target);
-				Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
-				Gameboard.update();
-				if (Game.checkForEnd() === true) {
-					console.log(`The end. ${Game.getTurnPlayer().name} won!`);
+				const boardCell = Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)];
+				if (boardCell === " ") {
+					Game.turns++;
+					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`; // boardCell only contains the value of the cekk whilst a reference would be needed for an actual change
+					Gameboard.update();
+					if (Game.checkForEnd() === true) {
+						console.log(`The end. ${Game.getTurnPlayer().name} won!`);
+					}
+					else if (Game.turns === 9) console.log("The end. It's a tie!");
 				}
-				else if (Game.turns === 9) console.log("The end. It's a tie!");
+				else {
+					console.log("That cell had already been clicked!");
+				}
 			});
 			boardContainer.appendChild(cell);
 		}
