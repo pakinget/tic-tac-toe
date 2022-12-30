@@ -19,7 +19,8 @@ const Gameboard = (() => {
 				const boardCell = Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)];
 				if (boardCell === " ") {
 					Game.turns++;
-					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`; // boardCell only contains the value of the cekk whilst a reference would be needed for an actual change
+					// I know this looks stupid as hell but boardCell only contains the value of the cekk whilst a reference would be needed for an actual change
+					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
 					Gameboard.update();
 					if (Game.checkForEnd() === true) {
 						console.log(`The end. ${Game.getTurnPlayer().name} won!`);
