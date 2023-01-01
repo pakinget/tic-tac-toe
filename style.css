@@ -152,4 +152,11 @@ body {
 	display: grid;
 	grid-template-columns: repeat(3, 10fr);
 	grid-template-rows: repeat(3, 10fr);
+	gap: 3px;
+	padding: 3px;
+	background: #000000;
+}
+
+.boardContainer>div {
+	background: #f2e9db;
 }
