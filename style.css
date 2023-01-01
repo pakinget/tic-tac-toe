@@ -129,6 +129,14 @@ table {
 	border-spacing: 0;
 }
 
+:root {
+	--palette-one: #f2e9db;
+	--palette-two: #18a3a5;
+	--palette-three: #0059a2;
+	--palette-four: #000000;
+	--palette-five: #21605e;
+}
+
 html {
 	height: 100vh;
 }
@@ -139,6 +147,7 @@ body {
 	height: 100%;
 	justify-items: center;
 	align-items: center;
+	background: var(--palette-one);
 }
 
 .topMenu {
@@ -154,9 +163,9 @@ body {
 	grid-template-rows: repeat(3, 10fr);
 	gap: 3px;
 	padding: 3px;
-	background: #000000;
+	background: var(--palette-four);
 }
 
 .boardContainer>div {
-	background: #f2e9db;
+	background: var(--palette-one);
 }
