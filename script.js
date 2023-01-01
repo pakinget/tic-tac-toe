@@ -22,7 +22,7 @@ const Gameboard = (() => {
 					// I know this looks stupid as hell but boardCell only contains the value of the cekk whilst a reference would be needed for an actual change
 					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
 					Gameboard.update();
-					if (Game.checkForEnd() === true) {
+					if (Gameboard.checkForEnd() === true) {
 						console.log(`The end. ${Game.getTurnPlayer().name} won!`);
 					}
 					else if (Game.turns === 9) console.log("The end. It's a tie!");
@@ -46,7 +46,17 @@ const Gameboard = (() => {
 			cells[i].textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
 		}
 	};
-	return { board, node, reset, create, update };
+	const checkForEnd = () => {
+		let end = false;
+		if (Gameboard.board[0][0] !== " " && Gameboard.board[0][0] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][2]) end = true;
+		else if (Gameboard.board[0][2] !== " " && Gameboard.board[0][2] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][0]) end = true;
+		for (let i = 0; i < 3 && end !== true; i++) {
+			if (Gameboard.board[i][0] !== " " && Gameboard.board[i][0] === Gameboard.board[i][1] && Gameboard.board[i][1] === Gameboard.board[i][2]) end = true;
+			else if (Gameboard.board[0][i] !== " " && Gameboard.board[0][i] === Gameboard.board[1][i] && Gameboard.board[1][i] === Gameboard.board[2][i]) end = true;
+		}
+		return end;
+	};
+	return { board, node, reset, create, update, checkForEnd };
 })();
 
 const Game = (() => {
@@ -75,17 +85,7 @@ const Game = (() => {
 		Gameboard.update();
 	};
 
-	const checkForEnd = () => {
-		let end = false;
-		if (Gameboard.board[0][0] !== " " && Gameboard.board[0][0] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][2]) end = true;
-		else if (Gameboard.board[0][2] !== " " && Gameboard.board[0][2] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][0]) end = true;
-		for (let i = 0; i < 3 && end !== true; i++) {
-			if (Gameboard.board[i][0] !== " " && Gameboard.board[i][0] === Gameboard.board[i][1] && Gameboard.board[i][1] === Gameboard.board[i][2]) end = true;
-			else if (Gameboard.board[0][i] !== " " && Gameboard.board[0][i] === Gameboard.board[1][i] && Gameboard.board[1][i] === Gameboard.board[2][i]) end = true;
-		}
-		return end;
-	};
-	return { players, playerX, playerO, turns, start, getTurnPlayer, checkForEnd };
+	return { players, playerX, playerO, turns, start, getTurnPlayer };
 })();
 
 let a = Player("x", "a", 0);
