@@ -7,6 +7,7 @@ const Player = (sign, name, wins) => {
 const Gameboard = (() => {
 	let board = [["x", "o", "x"], ["x", "o", "x"], ["o", "x", "o"]];
 	let node;
+
 	const create = () => {
 		const boardContainer = document.createElement("div");
 		boardContainer.classList.add("boardContainer");
@@ -36,16 +37,19 @@ const Gameboard = (() => {
 		const body = document.querySelector("body");
 		body.appendChild(boardContainer);
 	};
+
 	const reset = () => {
 		Gameboard.board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]];
 		Gameboard.node = undefined;
 	};
+
 	const update = () => {
 		const cells = Array.from(Gameboard.node.children);
 		for (let i = 0; i < 9; i++) {
 			cells[i].textContent = `${Gameboard.board[Math.floor(i / 3)][Math.floor(i - Math.floor(i / 3) * 3)]}`;
 		}
 	};
+
 	const checkForEnd = () => {
 		let end = false;
 		if (Gameboard.board[0][0] !== " " && Gameboard.board[0][0] === Gameboard.board[1][1] && Gameboard.board[1][1] === Gameboard.board[2][2]) end = true;
@@ -56,38 +60,41 @@ const Gameboard = (() => {
 		}
 		return end;
 	};
+
 	return { board, node, reset, create, update, checkForEnd };
 })();
 
 const Game = (() => {
 	let players = [];
-	let playerX;
-	let playerO;
 	let turns = 0;
+	let indexX;
+	let indexO;
 
 	const getTurnPlayer = () => {
-		if (Game.turns % 2 === 0) return Game.playerO;
-		else return Game.playerX;
+		if (Game.turns % 2 === 0) return Game.players[Game.indexO];
+		else return Game.players[Game.indexX];
 	};
 
-	const start = (playerX, playerO) => {
+	const start = (indexX, indexO) => {
 		// Swapping the players is playerX's sign isn't actually X
-		if (playerX.sign !== "x") {
-			const temp = playerO;
-			playerO = playerX;
-			playerX = temp;
+		if (Game.players[indexX].sign !== "x") {
+			const temp = Game.players[indexO];
+			Game.players[indexO] = Game.players[indexX];
+			Game.players[indexX] = temp;
 		}
-		Game.playerX = playerX;
-		Game.playerO = playerO;
 		Game.turns = 0;
+		Game.indexX = indexX;
+		Game.indexO = indexO;
 		Gameboard.reset();
 		Gameboard.create();
 		Gameboard.update();
 	};
 
-	return { players, playerX, playerO, turns, start, getTurnPlayer };
+	return { players, turns, indexX, indexO, start, getTurnPlayer };
 })();
 
 let a = Player("x", "a", 0);
 let b = Player("o", "b", 0);
-Game.start(a, b);
+Game.players.push(a);
+Game.players.push(b);
+Game.start(0, 1);
