@@ -168,4 +168,8 @@ body {
 
 .boardContainer>div {
 	background: var(--palette-one);
+	font-family: monospace;
+	font-size: calc(80vmin/4);
+	text-align: center;
+	user-select: none;
 }
