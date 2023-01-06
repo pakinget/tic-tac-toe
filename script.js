@@ -93,6 +93,58 @@ const Game = (() => {
 	return { players, turns, indexX, indexO, start, getTurnPlayer };
 })();
 
+const Form = (() => {
+	const prompt = () => {
+		const body = document.querySelector("body");
+
+		const formBg = document.createElement("div");
+		formBg.classList.add("formBg");
+		body.appendChild(formBg);
+
+		const form = document.createElement("form");
+		form.classList.add("form");
+		formBg.appendChild(form);
+
+		const title = document.createElement("h1");
+		title.textContent = "Start a new game";
+		form.appendChild(title);
+
+		const vsCont = document.createElement("div");
+		for (let i = 1; i <= 2; i++) {
+			if (i === 2) {
+				const vsText = document.createElement("div");
+				vsText.textContent = "vs";
+				vsCont.appendChild(vsText);
+			}
+			const label = document.createElement("label");
+			label.htmlFor = `playerName${i}`;
+			if (i === 1) label.textContent = "Player X:";
+			else label.textContent = "Player Y:";
+			vsCont.appendChild(label);
+
+			const input = document.createElement("input");
+			input.type = "text";
+			input.id = `playerName${i}`;
+			vsCont.appendChild(input);
+		}
+		form.appendChild(vsCont);
+
+		const start = document.createElement("button");
+		start.textContent = "Start";
+		start.type = "submit";
+		start.addEventListener("click", (event) => {
+			event.preventDefault();
+			Form.createGame();
+		});
+		form.appendChild(start);
+	};
+
+	const createGame = () => {
+		console.log("Start button clicked!");
+	};
+	return { prompt, createGame };
+})();
+
 let a = Player("x", "a", 0);
 let b = Player("o", "b", 0);
 Game.players.push(a);
