@@ -16,7 +16,7 @@ const Gameboard = (() => {
 			const cell = document.createElement("div");
 			cell.addEventListener("click", (event) => {
 				const cells = Array.from(event.target.parentElement.children);
-				const index = cells.indexOf(event.target);
+				const index = cells.playerOf(event.target);
 				const boardCell = Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)];
 				if (boardCell === " ") {
 					Game.turns++;
@@ -65,32 +65,31 @@ const Gameboard = (() => {
 })();
 
 const Game = (() => {
-	let players = [];
 	let turns = 0;
-	let indexX;
-	let indexO;
+	let playerX;
+	let playerO;
 
 	const getTurnPlayer = () => {
-		if (Game.turns % 2 === 0) return Game.players[Game.indexO];
-		else return Game.players[Game.indexX];
+		if (Game.turns % 2 === 0) return Game.playerO;
+		else return Game.playerX;
 	};
 
-	const start = (indexX, indexO) => {
+	const start = (playerX, playerO) => {
 		// Swapping the players is playerX's sign isn't actually X
-		if (Game.players[indexX].sign !== "x") {
-			const temp = Game.players[indexO];
-			Game.players[indexO] = Game.players[indexX];
-			Game.players[indexX] = temp;
+		if (Game.playerX.sign !== "x") {
+			const temp = Game.playerO;
+			Game.playerO = Game.playerX;
+			Game.playerX = temp;
 		}
 		Game.turns = 0;
-		Game.indexX = indexX;
-		Game.indexO = indexO;
+		Game.playerX = playerX;
+		Game.playerO = playerO;
 		Gameboard.reset();
 		Gameboard.create();
 		Gameboard.update();
 	};
 
-	return { players, turns, indexX, indexO, start, getTurnPlayer };
+	return { turns, playerX, playerO, start, getTurnPlayer };
 })();
 
 const Form = (() => {
@@ -127,7 +126,7 @@ const Form = (() => {
 			const label = document.createElement("label");
 			label.htmlFor = `playerName${i}`;
 			if (i === 1) label.textContent = "Player X:";
-			else label.textContent = "Player Y:";
+			else label.textContent = "Player O:";
 			inputCont.appendChild(label);
 
 			const input = document.createElement("input");
@@ -158,9 +157,3 @@ const Form = (() => {
 	};
 	return { prompt, createGame, cancel };
 })();
-
-let a = Player("x", "a", 0);
-let b = Player("o", "b", 0);
-Game.players.push(a);
-Game.players.push(b);
-Game.start(0, 1);
