@@ -8,7 +8,7 @@ const Gameboard = (() => {
 	let board = [["x", "o", "x"], ["x", "o", "x"], ["o", "x", "o"]];
 	let node;
 
-	const create = () => {
+	const create = (playerX, playerO) => {
 		const boardContainer = document.createElement("div");
 		boardContainer.classList.add("boardContainer");
 		Gameboard.node = boardContainer;
@@ -16,7 +16,7 @@ const Gameboard = (() => {
 			const cell = document.createElement("div");
 			cell.addEventListener("click", (event) => {
 				const cells = Array.from(event.target.parentElement.children);
-				const index = cells.playerOf(event.target);
+				const index = cells.indexOf(event.target);
 				const boardCell = Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)];
 				if (boardCell === " ") {
 					Game.turns++;
@@ -27,7 +27,10 @@ const Gameboard = (() => {
 					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = sign;
 					Gameboard.update();
 					if (Gameboard.checkForEnd() === true) {
-						console.log(`The end. ${Game.getTurnPlayer().name} won!`);
+						let winner;
+						if (Game.turns % 2 === 0) winner = playerO;
+						else winner = playerX;
+						console.log(`The end. ${winner.name} won!`);
 					}
 					else if (Game.turns === 9) console.log("The end. It's a tie!");
 				}
@@ -71,17 +74,9 @@ const Game = (() => {
 	let turns = 0;
 
 	const start = (playerX, playerO) => {
-		// Swapping the players is playerX's sign isn't actually X
-		if (Game.playerX.sign !== "x") {
-			const temp = Game.playerO;
-			Game.playerO = Game.playerX;
-			Game.playerX = temp;
-		}
 		Game.turns = 0;
-		Game.playerX = playerX;
-		Game.playerO = playerO;
 		Gameboard.reset();
-		Gameboard.create();
+		Gameboard.create(playerX, playerO);
 		Gameboard.update();
 	};
 
@@ -94,8 +89,9 @@ const Form = (() => {
 
 		const formBg = document.createElement("div");
 		formBg.classList.add("formBg");
-		formBg.addEventListener("click", () => {
-			Form.cancel();
+		formBg.addEventListener("click", (event) => {
+			if (event.target === formBg) Form.cancel();
+			else console.log("Bubbling click detected on formBg");
 		});
 		body.appendChild(formBg);
 
