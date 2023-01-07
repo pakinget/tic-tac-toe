@@ -148,10 +148,11 @@ body {
 	justify-items: center;
 	align-items: center;
 	background: var(--palette-one);
+	color: var(--palette-one);
+	font-family: sans-serif;
 }
 
 .topMenu {
-	font-family: sans-serif;
 	font-size: 3rem;
 }
 
@@ -185,4 +186,19 @@ body {
 	justify-content: center;
 	align-items: center;
 	z-index: 2;
+}
+
+form {
+	width: 40vw;
+	height: 60vh;
+	z-index: 3;
+	background-color: var(--palette-two);
+	box-shadow: 0 0 20px 8px var(--palette-five);
+	border: 1px solid var(--palette-three);
+	border-radius: 10px;
+	display: grid;
+	grid-template-rows: 3rem 1fr 3rem;
+	padding: 2vh 2vw;
+	align-items: center;
+	font-size: 5vh;
 }
