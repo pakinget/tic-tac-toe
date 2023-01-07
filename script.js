@@ -99,6 +99,9 @@ const Form = (() => {
 
 		const formBg = document.createElement("div");
 		formBg.classList.add("formBg");
+		formBg.addEventListener("click", () => {
+			Form.cancel();
+		});
 		body.appendChild(formBg);
 
 		const form = document.createElement("form");
@@ -147,7 +150,13 @@ const Form = (() => {
 	const createGame = () => {
 		console.log("Start button clicked!");
 	};
-	return { prompt, createGame };
+
+	const cancel = () => {
+		const formBg = document.querySelector(".formBg");
+		if (formBg !== null) formBg.remove();
+		else console.log("No element with the class formBg found");
+	};
+	return { prompt, createGame, cancel };
 })();
 
 let a = Player("x", "a", 0);
