@@ -1,7 +1,7 @@
 "use strict";
 
-const Player = (sign, name, wins) => {
-	return { sign, name, wins };
+const Player = (sign, name) => {
+	return { sign, name };
 };
 
 const Gameboard = (() => {
@@ -20,8 +20,11 @@ const Gameboard = (() => {
 				const boardCell = Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)];
 				if (boardCell === " ") {
 					Game.turns++;
+					let sign;
+					if (Game.turns % 2 === 0) sign = playerO.sign;
+					else sign = playerX.sign;
 					// I know this looks stupid as hell but boardCell only contains the value of the cell whilst a reference would be needed for an actual change
-					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = `${Game.getTurnPlayer().sign}`;
+					Gameboard.board[Math.floor(index / 3)][Math.floor(index - Math.floor(index / 3) * 3)] = sign;
 					Gameboard.update();
 					if (Gameboard.checkForEnd() === true) {
 						console.log(`The end. ${Game.getTurnPlayer().name} won!`);
@@ -66,13 +69,6 @@ const Gameboard = (() => {
 
 const Game = (() => {
 	let turns = 0;
-	let playerX;
-	let playerO;
-
-	const getTurnPlayer = () => {
-		if (Game.turns % 2 === 0) return Game.playerO;
-		else return Game.playerX;
-	};
 
 	const start = (playerX, playerO) => {
 		// Swapping the players is playerX's sign isn't actually X
@@ -89,7 +85,7 @@ const Game = (() => {
 		Gameboard.update();
 	};
 
-	return { turns, playerX, playerO, start, getTurnPlayer };
+	return { turns, start };
 })();
 
 const Form = (() => {
@@ -147,7 +143,11 @@ const Form = (() => {
 	};
 
 	const createGame = () => {
-		console.log("Start button clicked!");
+		const inputX = document.getElementById("playerName1");
+		const inputO = document.getElementById("playerName2");
+		const playerX = Player("x", inputX.value);
+		const playerO = Player("o", inputO.value);
+		Game.start(playerX, playerO);
 	};
 
 	const cancel = () => {
