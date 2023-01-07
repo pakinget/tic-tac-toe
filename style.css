@@ -173,3 +173,16 @@ body {
 	text-align: center;
 	user-select: none;
 }
+
+.formBg {
+	position: absolute;
+	width: 100vw;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
+}
