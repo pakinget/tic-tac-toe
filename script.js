@@ -110,22 +110,27 @@ const Form = (() => {
 		form.appendChild(title);
 
 		const vsCont = document.createElement("div");
+		vsCont.classList.add("vsCont");
 		for (let i = 1; i <= 2; i++) {
 			if (i === 2) {
 				const vsText = document.createElement("div");
 				vsText.textContent = "vs";
 				vsCont.appendChild(vsText);
 			}
+			const inputCont = document.createElement("div");
+			inputCont.classList.add("inputCont");
+			vsCont.appendChild(inputCont);
+
 			const label = document.createElement("label");
 			label.htmlFor = `playerName${i}`;
 			if (i === 1) label.textContent = "Player X:";
 			else label.textContent = "Player Y:";
-			vsCont.appendChild(label);
+			inputCont.appendChild(label);
 
 			const input = document.createElement("input");
 			input.type = "text";
 			input.id = `playerName${i}`;
-			vsCont.appendChild(input);
+			inputCont.appendChild(input);
 		}
 		form.appendChild(vsCont);
 

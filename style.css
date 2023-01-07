@@ -130,11 +130,13 @@ table {
 }
 
 :root {
-	--palette-one: #f2e9db;
-	--palette-two: #18a3a5;
-	--palette-three: #0059a2;
-	--palette-four: #000000;
-	--palette-five: #21605e;
+	--main: #36393F;
+	--shade: #2c2f33;
+	--shade-two: #23272a;
+	--contrast: #ffffff;
+	--accent: #7289da;
+	--accent-shade: #6377BF;
+	--accent-shade-two: #5667A6;
 }
 
 html {
@@ -147,8 +149,8 @@ body {
 	height: 100%;
 	justify-items: center;
 	align-items: center;
-	background: var(--palette-one);
-	color: var(--palette-one);
+	background: var(--main);
+	color: var(--contrast);
 	font-family: sans-serif;
 }
 
@@ -164,11 +166,11 @@ body {
 	grid-template-rows: repeat(3, 1fr);
 	gap: 3px;
 	padding: 3px;
-	background: var(--palette-four);
+	background: var(--accent);
 }
 
 .boardContainer>div {
-	background: var(--palette-one);
+	background: var(--main);
 	font-family: monospace;
 	font-size: calc(80vmin/4);
 	text-align: center;
@@ -192,13 +194,58 @@ form {
 	width: 40vw;
 	height: 60vh;
 	z-index: 3;
-	background-color: var(--palette-two);
-	box-shadow: 0 0 20px 8px var(--palette-five);
-	border: 1px solid var(--palette-three);
+	background-color: var(--shade);
+	box-shadow: 0 0 20px 8px var(--shade-two);
+	border: 1px solid var(--accent);
 	border-radius: 10px;
 	display: grid;
 	grid-template-rows: 3rem 1fr 3rem;
 	padding: 2vh 2vw;
 	align-items: center;
-	font-size: 5vh;
+	justify-items: center;
+	font-size: 2rem;
+	gap: 2vh;
+}
+
+.vsCont {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	justify-items: center;
+	gap: 2vw;
+}
+
+.inputCont {
+	display: flex;
+	flex-direction: column;
+	gap: 2vh;
+}
+
+input[type="text"] {
+	border: 0;
+	background-color: var(--accent);
+	color: var(--contrast);
+	font-size: 1.5rem;
+	width: 100%;
+	border-radius: 10px;
+	height: 2rem;
+}
+
+button[type="submit"] {
+	border: none;
+	border-radius: 10px;
+	background-color: var(--accent);
+	color: var(--contrast);
+	font-size: 2rem;
+	padding: 1vh 1vw;
+}
+
+button[type="submit"]:hover {
+	cursor: pointer;
+	background-color: var(--accent-shade);
+}
+
+button[type="submit"]:active {
+	background-color: var(--accent-shade-two);
 }
